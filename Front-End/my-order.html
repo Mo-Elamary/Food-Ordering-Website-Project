@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سجل طلباتي</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+    <div class="header-container">
+        <h1><a href="/views/index.html">🍽️ منصة طلب الطعام</a></h1>
+        <nav>
+            <a href="/views/cart.html">🛒 عربة التسوق</a>
+            <a href="#" id="user-logout">🚪 تسجيل الخروج</a>
+        </nav>
+    </div>
+
+    <main>
+        <h2>سجل طلباتي</h2>
+        <div id="orders-message" class="alert-message" style="display: none;"></div>
+        
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>رقم الطلب</th>
+                    <th>المطعم</th>
+                    <th>الحالة</th>
+                    <th>السعر الكلي</th>
+                    <th>تاريخ الطلب</th>
+                    <th>الإجراء</th>
+                </tr>
+            </thead>
+            <tbody id="my-orders-body">
+                </tbody>
+        </table>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Web Programming Project</p>
+    </footer>
+    <script src="/assets/js/my-orders.js"></script>
+</body>
+</html>

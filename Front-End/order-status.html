@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تتبع حالة الطلب</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+    <div class="header-container">
+        <h1><a href="/views/index.html">🍽️ منصة طلب الطعام</a></h1>
+        <nav>
+            <a href="/views/my-order.html">📜 طلباتي</a>
+        </nav>
+    </div>
+
+    <main>
+        <h2>تتبع حالة الطلب رقم: <span id="tracking-order-id">...</span></h2>
+        
+        <div id="status-tracker" class="status-tracker">
+            <div id="step-preparing" class="status-step">
+                <div class="status-dot">1</div>
+                <p>قيد الإعداد</p>
+            </div>
+            <div id="step-on-the-way" class="status-step">
+                <div class="status-dot">2</div>
+                <p>في الطريق</p>
+            </div>
+            <div id="step-delivered" class="status-step">
+                <div class="status-dot">3</div>
+                <p>تم التوصيل</p>
+            </div>
+            <div id="progress-bar" class="status-tracker-progress"></div>
+        </div>
+        
+        <div id="current-status-info" class="cart-summary" style="text-align: center; margin-top: 40px;">
+            <h3>الحالة الحالية: <span id="current-status-display" style="color: var(--primary-color);">...</span></h3>
+            <p>آخر تحديث: <span id="last-update-time">...</span></p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Web Programming Project</p>
+    </footer>
+    <script src="/assets/js/order-status.js"></script>
+</body>
+</html>

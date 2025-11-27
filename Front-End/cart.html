@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عربة التسوق</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+    <div class="header-container">
+        <h1><a href="/views/index.html">🍽️ منصة طلب الطعام</a></h1>
+        <nav>
+            <a href="/views/my-order.html">📜 طلباتي</a>
+            <a href="/views/index.html">🏠 المطاعم</a>
+        </nav>
+    </div>
+
+    <main>
+        <h2>محتويات عربة التسوق</h2>
+        <div id="cart-message" class="alert-message" style="display: none;"></div>
+        
+        <div id="cart-items-container">
+            </div>
+
+        <div id="checkout-section" style="margin-top: 30px;">
+            <div class="cart-summary">
+                <p>إجمالي السعر: <span id="cart-total" style="color: var(--primary-color);">0.00 ج.م</span></p>
+                
+                <h3>طريقة الدفع:</h3>
+                <form id="checkout-form">
+                    <div class="form-group" style="display: flex; gap: 20px;">
+                        <label>
+                            <input type="radio" name="payment_method" value="Cash" checked>
+                            الدفع عند الاستلام (Cash)
+                        </label>
+                        <label>
+                            <input type="radio" name="payment_method" value="Card">
+                            بطاقة ائتمانية (Card - Placeholder)
+                        </label>
+                    </div>
+                    <button type="submit" class="btn-primary" style="margin-top: 20px;">إتمام الطلب</button>
+                </form>
+                
+            </div>
+        </div>
+        
+        <div id="empty-cart-message" style="text-align: center; margin-top: 50px; display: none;">
+            <p style="font-size: 1.2em;">عربة التسوق فارغة حالياً. ابدأ بالتسوق الآن!</p>
+            <a href="/views/index.html" class="btn-primary" style="width: auto; display: inline-block;">اكتشف المطاعم</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Web Programming Project</p>
+    </footer>
+    <script src="/assets/js/Cart.js"></script>
+</body>
+</html>

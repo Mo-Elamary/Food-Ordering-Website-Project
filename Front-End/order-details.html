@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل الطلب</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+    <div class="header-container">
+        <h1><a href="/views/index.html">🍽️ منصة طلب الطعام</a></h1>
+        <nav>
+            <a href="/views/my-order.html">📜 طلباتي</a>
+        </nav>
+    </div>
+
+    <main>
+        <h2>تفاصيل الطلب رقم: <span id="order-id-display">...</span></h2>
+        
+        <div id="order-details-info" class="cart-summary" style="margin-bottom: 20px;">
+            </div>
+
+        <h3>قائمة الأصناف المطلوبة</h3>
+        <div id="order-items-list">
+            </div>
+        
+        <h3 style="margin-top: 30px;">تتبع حالة الطلب</h3>
+        <p>يمكنك تتبع حالة هذا الطلب في صفحة <a id="status-link" href="#">تتبع الطلب</a>.</p>
+        
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Web Programming Project</p>
+    </footer>
+    <script src="/assets/js/order-details.js"></script>
+</body>
+</html>

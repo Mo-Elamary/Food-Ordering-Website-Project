@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم المطعم</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <aside class="sidebar">
+            <h2>لوحة تحكم المطعم</h2>
+            <ul>
+                <li><a href="/views/admin.html" class="active">🏠 الرئيسية</a></li>
+                <li><a href="/views/admin-orders.html">📜 إدارة الطلبات</a></li>
+                <li><a href="/views/admin-reports.html">📈 التقارير</a></li>
+                <li><a href="#" id="admin-logout">🚪 تسجيل الخروج</a></li>
+            </ul>
+        </aside>
+        
+        <main class="admin-content">
+            <h2>مرحباً بك يا <span id="admin-name">المسؤول</span>!</h2>
+            <p>لوحة التحكم لمطعم: <span id="restaurant-name">...</span></p>
+            
+            <div id="admin-dashboard-summary" class="restaurant-grid">
+                <div class="restaurant-card" style="cursor: default;">
+                    <div class="card-content">
+                        <h3>طلبات قيد الإعداد</h3>
+                        <p id="pending-orders-count" style="font-size: 2em; color: var(--primary-color);">0</p>
+                    </div>
+                </div>
+                 <div class="restaurant-card" style="cursor: default;">
+                    <div class="card-content">
+                        <h3>إجمالي المبيعات (المسلّمة)</h3>
+                        <p id="total-sales-amount" style="font-size: 2em; color: var(--secondary-color);">0 ج.م</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 40px;">آخر الطلبات الواردة</h3>
+            <div id="latest-orders-list">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>رقم الطلب</th>
+                            <th>العميل</th>
+                            <th>المبلغ الكلي</th>
+                            <th>الحالة</th>
+                            <th>تاريخ الطلب</th>
+                            <th>إجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody id="latest-orders-body">
+                        </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script src="/assets/js/admin.js"></script>
+</body>
+</html>

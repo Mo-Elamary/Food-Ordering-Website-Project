@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تقارير المبيعات</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <aside class="sidebar">
+            <h2>لوحة تحكم المطعم</h2>
+            <ul>
+                <li><a href="/views/admin.html">🏠 الرئيسية</a></li>
+                <li><a href="/views/admin-orders.html">📜 إدارة الطلبات</a></li>
+                <li><a href="/views/admin-reports.html" class="active">📈 التقارير</a></li>
+                <li><a href="#" id="admin-logout">🚪 تسجيل الخروج</a></li>
+            </ul>
+        </aside>
+        
+        <main class="admin-content">
+            <h2>تقارير المبيعات والأداء</h2>
+            
+            <div class="restaurant-grid" style="grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));">
+                <div class="restaurant-card" style="cursor: default;">
+                    <div class="card-content">
+                        <h3>إجمالي المبيعات (الكل)</h3>
+                        <p id="total-revenue" style="font-size: 2.5em; color: var(--secondary-color);">0 ج.م</p>
+                        <small>للطلبات المسلّمة فقط.</small>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 40px;">أكثر الأطباق مبيعاً (Top 5)</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>الطبق</th>
+                        <th>عدد المرات التي تم بيعها</th>
+                    </tr>
+                </thead>
+                <tbody id="top-dishes-body">
+                    </tbody>
+            </table>
+        </main>
+    </div>
+
+    <script src="/assets/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل مستخدم جديد</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+    <div class="header-container">
+        <h1><a href="/views/index.html">🍽️ منصة طلب الطعام</a></h1>
+        <nav>
+            <a href="/views/login.html">👤 تسجيل الدخول</a>
+        </nav>
+    </div>
+
+    <main>
+        <div class="form-card" style="max-width: 600px;">
+            <h2>إنشاء حساب جديد</h2>
+            <div id="message" class="alert-message" style="display: none;"></div>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="full_name">الاسم الكامل:</label>
+                    <input type="text" id="full_name" name="full_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">البريد الإلكتروني:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">كلمة المرور:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">رقم الهاتف:</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+                <div class="form-group">
+                    <label for="address">العنوان:</label>
+                    <input type="text" id="address" name="address">
+                </div>
+                <div class="form-group">
+                    <label for="date_of_birth">تاريخ الميلاد:</label>
+                    <input type="date" id="date_of_birth" name="date_of_birth">
+                </div>
+                <div class="form-group">
+                    <label for="gender">النوع:</label>
+                    <select id="gender" name="gender">
+                        <option value="Male">ذكر</option>
+                        <option value="Female">أنثى</option>
+                        <option value="Other">أخرى</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary">تسجيل</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Web Programming Project</p>
+    </footer>
+    <script src="/assets/js/main.js"></script> </body>
+</html>

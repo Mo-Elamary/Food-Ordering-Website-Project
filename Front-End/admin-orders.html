@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة الطلبات</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <aside class="sidebar">
+            <h2>لوحة تحكم المطعم</h2>
+            <ul>
+                <li><a href="/views/admin.html">🏠 الرئيسية</a></li>
+                <li><a href="/views/admin-orders.html" class="active">📜 إدارة الطلبات</a></li>
+                <li><a href="/views/admin-reports.html">📈 التقارير</a></li>
+                <li><a href="#" id="admin-logout">🚪 تسجيل الخروج</a></li>
+            </ul>
+        </aside>
+        
+        <main class="admin-content">
+            <h2>جميع الطلبات</h2>
+            <div id="admin-orders-message" class="alert-message" style="display: none;"></div>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>رقم الطلب</th>
+                        <th>العميل</th>
+                        <th>المبلغ الكلي</th>
+                        <th>الحالة الحالية</th>
+                        <th>تاريخ الطلب</th>
+                        <th>تغيير الحالة إلى</th>
+                    </tr>
+                </thead>
+                <tbody id="admin-orders-body">
+                    </tbody>
+            </table>
+        </main>
+    </div>
+
+    <script src="/assets/js/admin.js"></script> </body>
+</html>
