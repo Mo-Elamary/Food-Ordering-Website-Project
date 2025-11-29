@@ -38,7 +38,7 @@ async function loadOrderDetails(id) {
             <p><strong>المطعم:</strong> ${order.restaurant_name}</p>
             <p><strong>تاريخ الطلب:</strong> ${new Date(order.created_at).toLocaleString()}</p>
             <p><strong>الحالة:</strong> <span style="color: ${order.status === 'Delivered' ? 'green' : 'orange'};">${order.status}</span></p>
-            <p><strong>الإجمالي المدفوع:</strong> ${order.total_price.toFixed(2)} ج.م</p>
+            <p><strong>الإجمالي المدفوع:</strong> ${parseFloat(order.total_price || 0).toFixed(2)} ج.م</p>
         `;
 
         // تحديث رابط التتبع
@@ -50,7 +50,7 @@ async function loadOrderDetails(id) {
             itemDiv.className = 'order-item-detail';
             itemDiv.innerHTML = `
                 <h4>${item.dish_name}</h4>
-                <p>${item.quantity} x ${item.price.toFixed(2)} ج.م</p>
+                <p>${item.quantity} x ${parseFloat(item.price || 0).toFixed(2)} ج.م</p>
                 <p>الإجمالي: ${(item.quantity * item.price).toFixed(2)} ج.م</p>
             `;
             itemsList.appendChild(itemDiv);

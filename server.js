@@ -75,7 +75,7 @@ app.post('/api/login', async (req, res) => {
         const [adminRows] = await db.query('SELECT * FROM admins WHERE email = ?', [email]);
         if (adminRows.length > 0) {
             const admin = adminRows[0];
-            const isMatch = await bcrypt.compare(password, admin.password || 'no-hash-for-now'); // افترض أننا لا نشفر كلمات مرور المسؤولين حالياً
+            const isMatch = await bcrypt.compare(password, admin.password ); // افترض أننا لا نشفر كلمات مرور المسؤولين حالياً
             if (isMatch || admin.password === password) { // للمشروع الأكاديمي يمكن التحقق بدون تشفير مؤقتاً
                 return res.json({ 
                     success: true, 
@@ -89,7 +89,7 @@ app.post('/api/login', async (req, res) => {
         if (userRows.length > 0) {
             const user = userRows[0];
             const isMatch = await bcrypt.compare(password, user.password);
-            if (isMatch) {
+            if (isMatch || user.password === password) {
                 return res.json({ 
                     success: true, 
                     user: { id: user.user_id, name: user.full_name, email: user.email, isAdmin: false } 
@@ -146,7 +146,7 @@ app.get('/api/restaurants/:id/dishes', async (req, res) => {
 // ===================================
 // 3. API: الطلبات (Orders)
 // ===================================
-
+/*
 // إنشاء طلب جديد
 app.post('/api/orders', isLoggedIn, async (req, res) => {
     const userId = req.userId; // من الـ Middleware
@@ -191,6 +191,132 @@ app.post('/api/orders', isLoggedIn, async (req, res) => {
 
 
 // جلب طلبات المستخدم (Order History)
+app.get('/api/users/orders', isLoggedIn, async (req, res) => {
+    const userId = req.userId;
+    try {
+        const [orders] = await db.query(
+            `SELECT o.order_id, r.name as restaurant_name, o.total_price, o.status, o.created_at 
+             FROM orders o
+             JOIN restaurants r ON o.restaurant_id = r.restaurant_id
+             WHERE o.user_id = ? 
+             ORDER BY o.created_at DESC`,
+            [userId]
+        );
+        res.json(orders);
+    } catch (err) {
+        console.error('Error fetching user orders:', err.message);
+        res.status(500).json({ error: 'Server error.' });
+    }
+});
+
+// جلب تفاصيل طلب محدد
+app.get('/api/orders/:id/details', isLoggedIn, async (req, res) => {
+    const orderId = req.params.id;
+    try {
+        const [orderRows] = await db.query(
+            `SELECT o.*, r.name as restaurant_name 
+             FROM orders o
+             JOIN restaurants r ON o.restaurant_id = r.restaurant_id
+             WHERE o.order_id = ?`, 
+            [orderId]
+        );
+        const [items] = await db.query(
+            `SELECT oi.quantity, oi.price, d.name as dish_name 
+             FROM order_items oi
+             JOIN dishes d ON oi.dish_id = d.dish_id
+             WHERE oi.order_id = ?`,
+            [orderId]
+        );
+
+        res.json({ order: orderRows[0], items: items });
+    } catch (err) {
+        console.error('Error fetching order details:', err.message);
+        res.status(500).json({ error: 'Server error.' });
+    }
+});
+
+// جلب حالة الطلب فقط (لصفحة تتبع حالة الطلب)
+app.get('/api/orders/:id/status', async (req, res) => {
+    const orderId = req.params.id;
+    try {
+        const [rows] = await db.query('SELECT status, created_at FROM orders WHERE order_id = ?', [orderId]);
+        if (rows.length === 0) return res.status(404).json({ error: 'Order not found.' });
+        res.json(rows[0]);
+    } catch (err) {
+        console.error('Error fetching order status:', err.message);
+        res.status(500).json({ error: 'Server error.' });
+    }
+});
+*/
+app.get('/api/restaurant/orders', isRestaurantAdmin, async (req, res) => {
+    // ⚠️ يتم جلب الـ restaurantId من middleware التحقق من صلاحيات المطعم
+    const restaurantId = req.restaurantId; 
+    
+    if (!restaurantId) {
+        return res.status(401).json({ error: 'Admin is not associated with a restaurant.' });
+    }
+
+    try {
+        const [orders] = await db.query(
+            `SELECT 
+                o.order_id, 
+                o.total_price, 
+                o.status, 
+                o.created_at,
+                u.full_name AS client_name,
+                u.phone,
+                u.address
+            FROM orders o
+            JOIN users u ON o.user_id = u.user_id
+            WHERE o.restaurant_id = ? 
+            ORDER BY o.created_at DESC`, 
+            [restaurantId]
+        );
+        
+        res.json(orders);
+    } catch (err) {
+        console.error('Error fetching restaurant orders:', err.message);
+        res.status(500).json({ error: 'Server error while fetching restaurant orders.' });
+    }
+});
+
+// ----------------------------------------------------------------------
+// 5. تحديث حالة الطلب (Admin Action)
+// ----------------------------------------------------------------------
+// PUT /api/orders/:id/status
+app.put('/api/orders/:id/status', isRestaurantAdmin, async (req, res) => {
+    const orderId = req.params.id;
+    const { status } = req.body;
+    const restaurantId = req.restaurantId; 
+    
+    // التحقق من صلاحية الحالة الجديدة
+    const validStatuses = ['Preparing', 'On the way', 'Delivered'];
+    if (!validStatuses.includes(status)) {
+        return res.status(400).json({ error: 'Invalid order status provided.' });
+    }
+
+    try {
+        // 🛡️ تحديث حالة الطلب مع التأكد من أن المطعم هو المالك للطلب
+        const [result] = await db.query(
+            `UPDATE orders 
+             SET status = ? 
+             WHERE order_id = ? AND restaurant_id = ?`, 
+            [status, orderId, restaurantId]
+        );
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'Order not found or unauthorized.' });
+        }
+
+        res.json({ success: true, message: 'Order status updated successfully.' });
+    } catch (err) {
+        console.error('Error updating order status:', err.message);
+        res.status(500).json({ error: 'Server error.' });
+    }
+});
+
+// ... (بقية نقاط اتصالك الحالية: جلب سجل طلبات المستخدم، تفاصيل طلب محدد، حالة الطلب) ...
+
 app.get('/api/users/orders', isLoggedIn, async (req, res) => {
     const userId = req.userId;
     try {
@@ -324,7 +450,43 @@ app.get('/api/admin/reports', isAdmin, async (req, res) => {
     }
 });
 
+
+// GET reviews
+app.get('/api/reviews/:dishId', async (req, res) => {
+    const dishId = req.params.dishId;
+
+    const [reviews] = await db.query(`
+        SELECT reviews.*, users.full_name AS name
+        FROM reviews
+        JOIN users ON users.user_id = reviews.user_id
+        WHERE dish_id = ?
+        ORDER BY created_at DESC
+    `, [dishId]);
+
+    res.json({ success: true, reviews });
+});
+
+
+// POST add review
+app.post('/api/reviews', async (req, res) => {
+    const { user_id, dish_id, rating, comment } = req.body;
+
+    try {
+        await db.query(
+            'INSERT INTO reviews (user_id, dish_id, rating, comment) VALUES (?, ?, ?, ?)',
+            [user_id, dish_id, rating, comment]
+        );
+        res.json({ success: true });
+    } catch (err) {
+        console.error(err);
+        res.json({ success: false, error: "Database error" });
+    }
+});
+
 // تشغيل الخادم
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+
+

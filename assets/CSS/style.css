@@ -153,10 +153,14 @@ h2 {
     width: 100%;
     height: 180px;
     object-fit: cover;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
 }
 
 .card-content {
     padding: 15px;
+    display: flex;
+    flex-direction: column;
 }
 
 .card-content h3 {
@@ -180,6 +184,9 @@ h2 {
 
 .dish-card {
     cursor: default;
+    overflow: hidden;
+    display: flex;
+    max-width: 550px;
 }
 .dish-card .dish-details {
     display: flex;

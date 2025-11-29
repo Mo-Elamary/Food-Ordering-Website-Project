@@ -1,4 +1,4 @@
-// assets/js/my-orders.js
+
 document.addEventListener('DOMContentLoaded', () => {
     checkUserLoggedIn();
     loadUserOrders();
@@ -44,7 +44,7 @@ async function loadUserOrders() {
                 <td>${order.order_id}</td>
                 <td>${order.restaurant_name}</td>
                 <td><span style="color: ${order.status === 'Delivered' ? 'green' : (order.status.includes('way') ? 'blue' : 'orange')}">${order.status}</span></td>
-                <td>${order.total_price.toFixed(2)} ج.م</td>
+                <td>${parseFloat(order.total_price || 0).toFixed(2)} ج.م</td>
                 <td>${new Date(order.created_at).toLocaleDateString()}</td>
                 <td>
                     <a href="/views/order-details.html?id=${order.order_id}" class="btn-primary" style="width: auto; padding: 5px 10px; display: inline-block;">التفاصيل</a>
