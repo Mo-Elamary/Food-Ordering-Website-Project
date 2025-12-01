@@ -1,21 +1,13 @@
 // assets/js/main.js
 document.addEventListener('DOMContentLoaded', () => {
-    // تحديث رابط التوثيق بناءً على حالة المستخدم
     updateAuthLink();
-
-    const path = window.location.pathname;
-    
-    // منطق التسجيل
+    const path = window.location.pathname;  
     if (path.includes('register.html')) {
         document.getElementById('register-form')?.addEventListener('submit', handleRegister);
-    }
-    
-    // منطق تسجيل الدخول
+    }   
     if (path.includes('login.html')) {
         document.getElementById('login-form')?.addEventListener('submit', handleLogin);
     }
-    
-    // منطق جلب المطاعم للصفحة الرئيسية
     if (path.includes('index.html')) {
         fetchRestaurants();
         updateCartCount();
@@ -89,7 +81,7 @@ async function handleLogin(e) {
         const result = await response.json();
 
         if (result.success) {
-            // حفظ بيانات المستخدم في Local Storage (بما في ذلك isAdmin)
+            
             localStorage.setItem('user', JSON.stringify(result.user));
             
             if (result.user.isAdmin) {
@@ -123,8 +115,6 @@ function updateCartCount() {
     if (countSpan) countSpan.textContent = count;
     if (countSpanMenu) countSpanMenu.textContent = count;
 }
-
-
 // =================== Restaurant Functions ===================
 async function fetchRestaurants() {
     const listContainer = document.getElementById('restaurants-list');

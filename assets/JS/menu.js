@@ -1,20 +1,14 @@
 // assets/js/menu.js
-document.addEventListener('DOMContentLoaded', () => {
-    // تحديث عدد العناصر في العربة
-    updateCartCountMenu(); 
-    
-    // جلب ID المطعم من URL
+document.addEventListener('DOMContentLoaded', () => {     
+    updateCartCountMenu();       
     const urlParams = new URLSearchParams(window.location.search);
     const restaurantId = urlParams.get('id');
-
     if (restaurantId) {
         fetchMenu(restaurantId);
     } else {
         document.getElementById('menu-container').innerHTML = '<p style="color: red;">لم يتم تحديد رقم المطعم.</p>';
     }
 });
-
-// يستخدم نفس دالة getCart و updateCartCount من main.js (يجب التأكد من استيرادها أو نسخها في تطبيق حقيقي)
 function getCart() {
     return JSON.parse(localStorage.getItem('food_cart') || '[]');
 }
@@ -40,9 +34,7 @@ async function fetchMenu(id) {
     try {
         const response = await fetch(`/api/restaurants/${id}/dishes`);
         if (!response.ok) throw new Error('Failed to fetch menu');
-        const data = await response.json();
-
-        // تحديث معلومات المطعم
+        const data = await response.json();   
         document.getElementById('page-title').textContent = data.restaurant.name;
         headerName.textContent = data.restaurant.name;
         infoDiv.innerHTML = `
@@ -114,14 +106,12 @@ function handleAddToCart(event) {
     const dishPrice = parseFloat(button.getAttribute('data-dish-price'));
     const restaurantId = document.getElementById('restaurant-id').value;
 
-    let cart = getCart();
-
-    // التحقق من أن جميع الأصناف من نفس المطعم
+    let cart = getCart();        
     if (cart.length > 0 && cart[0].restaurant_id != restaurantId) {
         if (!confirm('سلة التسوق تحتوي على أصناف من مطعم آخر. هل تريد إفراغ السلة وبدء طلب جديد؟')) {
             return;
         }
-        cart = []; // إفراغ العربة
+        cart = [];   
     }
 
     const existingItem = cart.find(item => item.dish_id === dishId);
@@ -134,7 +124,7 @@ function handleAddToCart(event) {
             name: dishName,
             price: dishPrice,
             quantity: 1,
-            restaurant_id: restaurantId // حفظ ID المطعم
+            restaurant_id: restaurantId    
         });
     }
 

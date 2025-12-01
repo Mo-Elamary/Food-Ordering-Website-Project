@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>تقييم الطلب</title>
+  <link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+<body>
+  <div class="header-container">
+    <h1><a href="/views/index.html">منصة طلب الطعام</a></h1>
+    <nav>
+      <a href="/views/my-order.html">طلباتي</a>
+      <a href="#" id="user-logout">تسجيل الخروج</a>
+    </nav>
+  </div>
+
+  <main>
+    <h2>تقييم الطلب رقم: <span id="order-id-display">...</span></h2>
+
+    <div id="review-message" class="alert-message" style="display:none;"></div>
+
+    <div class="cart-summary" id="order-summary">
+    </div>
+
+    <form id="review-form" style="max-width:600px;margin-top:20px;">
+      <label for="rating"><strong>التقييم (1 - 5):</strong></label><br/>
+      <select id="rating" required>
+        <option value="">اختر التقييم</option>
+        <option value="1">1 -⭐  </option>
+        <option value="2">2 -⭐⭐ </option>
+        <option value="3">3 -⭐⭐⭐ </option>
+        <option value="4">4 -⭐⭐⭐⭐  </option>
+        <option value="5">5 -⭐⭐⭐⭐⭐ </option>
+      </select>
+
+      <div style="margin-top:12px;">
+        <label for="comment"><strong>تعليق (اختياري):</strong></label><br/>
+        <textarea id="comment" rows="5" style="width:100%;"></textarea>
+      </div>
+
+      <div style="margin-top:12px;">
+        <button type="submit" class="btn-primary">إرسال التقييم</button>
+        <a href="/views/my-order.html" class="btn-secondary" style="margin-right:10px;">العودة لطلباتي</a>
+      </div>
+    </form>
+  </main>
+
+  <footer><p>&copy; 2025 Web Programming Project</p></footer>
+
+  <script src="/assets/js/review.js"></script>
+</body>
+</html>

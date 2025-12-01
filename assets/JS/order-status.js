@@ -4,8 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const orderId = urlParams.get('id');
 
     if (orderId) {
-        document.getElementById('tracking-order-id').textContent = orderId;
-        // تحديث الحالة كل 5 ثوانٍ
+        document.getElementById('tracking-order-id').textContent = orderId;     
         updateOrderStatus(orderId);
         setInterval(() => updateOrderStatus(orderId), 5000); 
     } else {
@@ -49,19 +48,16 @@ async function updateOrderStatus(id) {
                 stepElement.classList.add('complete');
             } else if (stepNum === currentStep) {
                 stepElement.classList.add('active');
-                // حساب العرض لشريط التقدم (100% عند الخطوة 3، 50% عند الخطوة 2)
+                         
                 progressWidth = (stepNum - 1) * 50; 
             }
         });
         
-        // ضبط شريط التقدم
         document.getElementById('progress-bar').style.width = `${progressWidth}%`;
-
-        // تحديث العرض النصي
+      
         document.getElementById('current-status-display').textContent = statusDetails.label;
         document.getElementById('last-update-time').textContent = new Date().toLocaleTimeString();
-        
-        // إيقاف التحديث إذا تم التوصيل
+         
         if (currentStatus === 'Delivered') {
             clearInterval(this.intervalId); 
             document.getElementById('current-status-display').style.color = 'green';

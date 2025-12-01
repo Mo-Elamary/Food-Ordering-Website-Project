@@ -47,8 +47,10 @@ async function loadUserOrders() {
                 <td>${parseFloat(order.total_price || 0).toFixed(2)} ج.م</td>
                 <td>${new Date(order.created_at).toLocaleDateString()}</td>
                 <td>
-                    <a href="/views/order-details.html?id=${order.order_id}" class="btn-primary" style="width: auto; padding: 5px 10px; display: inline-block;">التفاصيل</a>
+                    <a href="/views/order-details.html?id=${order.order_id}" class="btn-primary" style="width:auto;padding:5px 10px;display:inline-block;">التفاصيل</a>
+                    ${order.status === 'Delivered' ? `<a href="/views/review.html?id=${order.order_id}" class="btn-secondary" style="margin-right:8px;width:auto;padding:5px 10px;display:inline-block;">إضافة تقييم</a>` : ''}
                 </td>
+
             `;
         });
 

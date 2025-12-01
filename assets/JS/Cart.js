@@ -10,7 +10,7 @@ function getCart() {
 
 function saveCart(cart) {
     localStorage.setItem('food_cart', JSON.stringify(cart));
-    loadCart(); // إعادة تحميل العرض بعد الحفظ
+    loadCart(); 
 }
 
 function loadCart() {
@@ -63,7 +63,6 @@ function handleRemoveItem(e) {
     const dishId = parseInt(e.target.getAttribute('data-id'));
     let cart = getCart();
     
-    // إزالة العنصر بالكامل
     cart = cart.filter(item => item.dish_id !== dishId);
     
     saveCart(cart);
@@ -97,22 +96,23 @@ async function handleCheckout(e) {
 
     // تهيئة بيانات الطلب
     const orderData = {
-        restaurant_id: restaurantId,
-        total_price: total,
-        payment_method: paymentMethod,
-        order_items: cart.map(item => ({
-            dish_id: item.dish_id,
-            quantity: item.quantity,
-            price: item.price
-        }))
-    };
+    restaurant_id: restaurantId,
+    total_price: total,
+    payment_method: paymentMethod,
+    items: cart.map(item => ({
+        dish_id: item.dish_id,
+        quantity: item.quantity,
+        price: item.price
+    }))
+};
+
     
     try {
         const response = await fetch('/api/orders', {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json',
-                'user-id': user.id // إرسال ID المستخدم للتوثيق
+                'user-id': user.id 
             },
             body: JSON.stringify(orderData)
         });
@@ -123,7 +123,7 @@ async function handleCheckout(e) {
             messageDiv.textContent = `تم إنشاء الطلب رقم ${result.order_id} بنجاح!`;
             messageDiv.style.display = 'block';
             
-            localStorage.removeItem('food_cart'); // إفراغ العربة
+            localStorage.removeItem('food_cart');   
             setTimeout(() => {
                 window.location.href = `/views/order-status.html?id=${result.order_id}`;
             }, 2000);

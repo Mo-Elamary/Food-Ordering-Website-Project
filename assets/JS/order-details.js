@@ -31,20 +31,15 @@ async function loadOrderDetails(id) {
         if (!response.ok) throw new Error('Order not found or access denied.');
         
         const data = await response.json();
-        const order = data.order;
-        
-        // تحديث المعلومات الأساسية
+        const order = data.order;   
         infoDiv.innerHTML = `
             <p><strong>المطعم:</strong> ${order.restaurant_name}</p>
             <p><strong>تاريخ الطلب:</strong> ${new Date(order.created_at).toLocaleString()}</p>
             <p><strong>الحالة:</strong> <span style="color: ${order.status === 'Delivered' ? 'green' : 'orange'};">${order.status}</span></p>
             <p><strong>الإجمالي المدفوع:</strong> ${parseFloat(order.total_price || 0).toFixed(2)} ج.م</p>
         `;
-
-        // تحديث رابط التتبع
-        statusLink.href = `/views/order-status.html?id=${id}`;
-
-        // تحديث قائمة الأصناف
+   
+        statusLink.href = `/views/order-status.html?id=${id}`;   
         data.items.forEach(item => {
             const itemDiv = document.createElement('div');
             itemDiv.className = 'order-item-detail';
